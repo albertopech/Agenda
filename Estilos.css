@@ -1,0 +1,588 @@
+* {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    overflow: hidden;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .container-center {
+    max-width: auto;
+    margin: 0 auto;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    background-color: #000000; /* El color azul del botón */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none; /* Quita el subrayado del texto del enlace */
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #0057b37c; /* Un azul un poco más oscuro para el hover */
+    color: white;
+}
+
+  header h1 {
+    float: left;
+    font-size: 28px;
+    margin-top: 4px;
+  }
+  
+  nav {
+    float: right;
+  }
+  
+  nav a, nav button {
+    margin: 0 15px;
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+  }
+  
+  nav button {
+    background-color: #f9f9f9;
+    color: black;
+    border: 1px solid black;
+    padding: 10px 15px;
+    border-radius: 5px;
+  }
+  
+  nav button+button {
+    display: none;
+  }
+  
+  nav button:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+  }
+
+  .logo img {
+    width: 8vw; /* Esto hará que el logo tenga un ancho del 10% del ancho del viewport */
+    height: 10; /* Esto mantendrá la proporción de la imagen */
+}
+ 
+.bienvenido {
+    margin: 0;
+    background-image: url('Imagenes/bienvenidobg.png');
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    padding: 100px 0;
+    /* Establece un color de fondo con transparencia */
+    background-color: rgba(230, 230, 230, 0.7); /* '0.7' es el nivel de opacidad */
+    /* Usa blend-mode para mezclar el color de fondo con la imagen */
+    background-blend-mode: overlay; /* Puedes experimentar con otros valores como 'darken', 'multiply', etc. */
+}
+
+  .bienvenido p {
+    margin: 20px 0;
+  }
+  
+  .bienvenido button {
+    padding: 10px;
+    border: 1px solid black;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 10px 0;
+  }
+  
+  .bienvenido button:hover {
+    background-color: transparent;
+    color: black;
+    border: 1px solid black; 
+  }
+
+  .welcome-message {
+    background-color: #f9f9f9; /* Color de fondo claro */
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 20px; /* Espaciado interno */
+    margin: 20px auto; /* Margen automático para centrarlo */
+    max-width: 800px; /* Ancho máximo de la tarjeta */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para resaltar la tarjeta */
+    font-family: 'Arial', sans-serif; /* Tipo de letra */
+  }
+
+  p {
+    line-height: 1.6; /* Espaciado de línea para mejorar la legibilidad */
+    color: #333; /* Color del texto oscuro para mejorar el contraste */
+    font-size: 1.1em; /* Tamaño de fuente ligeramente mayor para fácil lectura */
+  }
+  
+  .newsletter-fullwidth {
+    width: 100%;
+    background-color: #f9f9f9;
+    padding: 50px 0;
+    clear: both;
+    display: flex;
+    justify-content: center; /* Alinea las cards horizontalmente en el centro */
+    align-items: flex-start; /* Alinea las cards al comienzo del contenedor */
+  }
+  
+  .newsletter-content {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 50px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.104);
+    border-radius: 8px;
+    background-color: white;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  
+  .newsletter-fullwidth h2, .newsletter-fullwidth p {
+    color: #333;
+    margin: 10px 0;
+  }
+
+  /*Card's*/
+
+  .card {
+    flex: 1; /* Asigna la misma flexibilidad a ambas cards para que ocupen el mismo espacio */
+    margin: 10px; /* Espacio alrededor de las cards */
+    /* Agrega cualquier estilo adicional que desees para las cards aquí */
+  }
+  #card2 .map
+  {
+    padding: 10px; /* Espacio interior para cada tarjeta */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Sombra para efecto 3D */
+    background-color: #fff; /* Fondo blanco para cada tarjeta */
+  }
+  #card6 .iframe-container {
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    height: auto; /* O la altura que desees para el contenedor, 100vh cubre toda la altura de la ventana */
+  }
+  
+  iframe {
+    border: solid 1px #777;
+    /* El width y height ya están definidos en el iframe, pero también se pueden mover aquí */
+  }
+  
+
+  label {
+    display: block;
+    text-align: left;
+    margin: 5px 0px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0px;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 4px;
+  }
+  
+  .newsletter-fullwidth button {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid black;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 10px 0;
+  }
+  
+  .newsletter-fullwidth button:hover {
+    background-color: transparent;
+    color: black;
+    border: 1px solid black;
+  }
+  
+  footer {
+    background-color: rgba(0, 0, 0, 0.700);
+    color: white;
+    padding: 50px 0;
+    overflow: hidden;
+  }
+  
+  footer .container-center div {
+    float: left;
+    width: 20%;
+    text-align: center;
+  }
+  
+  footer h2, footer h3 {
+    font-size: 28px;
+    margin: 30px 0;
+  }
+  
+  footer p, footer a {
+    margin: 7px 0;
+    display: block;
+    color: white;
+    text-decoration: none;
+  }
+  
+  footer a:hover {
+    color: gray;
+  }
+  
+  @media (max-width: 800px) {
+    nav a {
+      display: none;
+    }
+  
+    nav button:nth-child(5) {
+      display: none;
+    }
+  
+    nav button+button {
+      display: block;
+    }
+  
+    .newsletter-fullwidth {
+      box-sizing: border-box;
+    }
+  
+    .newsletter-content {
+      max-width: 800px;
+      border-radius: 0px;
+      background-color: #f9f9f9;
+      box-shadow: 0 0px 0px;
+      padding: 30px;
+    }  
+  
+    footer .container-center {
+      width: 100%;
+    }
+  
+    footer .container-center div {
+      width: 100%;
+      float: none;
+      display: block;
+      clear: both;
+      text-align: center;
+    }
+  }
+    
+/*Login*/
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .bg-light {
+    background-color: #f0f0f0;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 100%; /* Puedes ajustar el ancho según tus necesidades */
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  .card-header {
+    background-color: #0056b3;
+    color: white;
+    padding: 10px 20px;
+  }
+  
+  .card-body {
+    padding: 20px;
+    background-color: white;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-control {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .btn-primary {
+    color: white;
+    background-color: #0056b3;
+    border-color: #0056b3;
+    border-radius: 4px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  
+  .btn-link {
+    color: #0056b3;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .btn-link:hover {
+    text-decoration: underline;
+  }
+  
+  .alert {
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-bottom: 15px;
+  }
+  
+  .alert-danger {
+    background-color: #f44336;
+  }
+  
+  /* Add a blue text color to links */
+  a {
+    color: dodgerblue;
+  }
+  
+  .topnav {
+    overflow: hidden;
+    background-color: #ffff;
+  }
+  
+  .logo {
+    padding: 14px 16px;
+  }
+  
+  .logo img {
+    vertical-align: middle;
+  }
+  
+  /* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
+  @media screen and (max-width: 400px) {
+    .topnav a {
+      float: none;
+      display: block;
+      text-align: left;
+    }
+  }
+
+
+  /* Index */
+body {
+      margin: 0; /* Elimina los márgenes predeterminados del cuerpo */
+      /* Establecer la imagen de fondo */
+      background-image: url('Imagenes/bg.jpg');
+  
+      /* Ajustar la imagen de fondo */
+      background-size: cover;
+  
+      /* Centrar la imagen de fondo */
+      background-position: center;
+  
+      /* Fijar la imagen de fondo para que no se desplace con el contenido */
+      background-attachment: fixed;
+}
+
+.logo img {
+  width: 10vw; /* Esto hará que el logo tenga un ancho del 10% del ancho del viewport */
+  height: 10; /* Esto mantendrá la proporción de la imagen */
+}
+      
+/* Estilos para la barra de navegación */
+.topnav {
+  background-color: rgb(234, 224, 224); /* Cambia el color de fondo a blanco */
+  overflow: hidden;
+  height: 80px; /* Aumenta la altura de la barra de navegación */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+      
+.topnav a {
+  color: #063573; /* Cambia el color del texto a azul marino */
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold; /* Hace el texto en negrita */
+  padding: 30px 5px; /* Aumenta el espacio vertical y mantiene el espacio horizontal */
+}
+
+.topnav .logo {
+  padding: 12px 0px; /* Ajusta el espacio alrededor del logo */
+}
+
+.topnav .button {
+  background-color: #063573; /* Cambia el color de fondo del botón a azul */
+  color: rgb(255, 255, 255); /* Cambia el color del texto a blanco */
+  border: none;
+  border-radius: 30px; /* Hace el botón redondeado */
+  padding: 20px 100px; /* Aumenta el espacio alrededor del botón */
+  margin-top: 10px; /* Centra verticalmente el botón */
+  margin-right: 120px; /* Agrega un margen derecho para mover el botón hacia la derecha */
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(1fr)); /* Esto creará tantas columnas como sea posible mientras mantiene cada tarjeta entre 200px y 1fr de ancho */
+  grid-template-rows: repeat(3, 1fr); /* Define tres filas de igual tamaño */
+  gap: 20px; /* Espacio entre las tarjetas */
+  padding: 20px; /* Espacio alrededor del contenedor de tarjetas */
+}
+      
+.card {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para la tarjeta 7 y 8 */
+#card7 {
+  grid-column: 1/2; /* Ocupa la primera columna */
+  grid-row: 1/20; /* Ocupa ambas filas, haciéndola más alargada */
+  background-color: #fafafa; /* Fondo blanco */
+
+  display: flex; /* Utiliza Flexbox */
+  flex-direction: column; /* Organiza los elementos en una columna */
+  align-items: center; /* Centra los elementos horizontalmente */
+  justify-content: center; /* Centra los elementos verticalmente */
+  text-align: center; /* Asegura que el texto esté centrado */
+  padding-top: 10px; /* Esto agregará un margen en la parte superior dentro del contenedor de la tarjeta */
+}
+
+#card8 {
+  grid-column: 2/3; /* Ocupa la primera columna */
+  grid-row: 1/20; /* Ocupa ambas filas, haciéndola más alargada */
+  background-color: rgb(0, 0, 0);
+  
+  display: flex; /* Utiliza Flexbox */
+  flex-direction: column; /* Organiza los elementos en una columna */
+  align-items: center; /* Centra los elementos horizontalmente */
+  justify-content: center; /* Centra los elementos verticalmente */
+  text-align: center; /* Asegura que el texto esté centrado */    
+  padding-top: 10px; /* Esto agregará un margen en la parte superior dentro del contenedor de la tarjeta */
+} 
+
+.card7, .card8 {
+  width:  40vw; /* Hace que la imagen ocupe todo el ancho del contenedor */
+  height: auto; /* Mantiene la proporción de la imagen */
+  display: block; /* Elimina espacios extra debajo de la imagen */
+}
+
+.image-button7, .image-button8 {
+  width: 100%; /* Asegura que el botón se expanda al ancho completo de su contenedor */
+  display: flex; /* Establece el botón como un contenedor flex */
+  justify-content: center; /* Centra la imagen horizontalmente dentro del botón */
+  background: transparent; /* Asegura que el fondo del botón sea transparente */
+  border: none; /* Elimina el borde del botón */
+  overflow: hidden; /* Esto evitará que cualquier parte del botón se desborde fuera de su contenedor */
+  margin: 0; /* Elimina cualquier margen que el botón pueda tener */
+  padding: 0; /* Elimina cualquier relleno que el botón pueda tener */
+  cursor: pointer; /* Cambia el cursor a una mano cuando se pasa por encima */
+}
+
+.image-text7 {
+  font-size: 18px; /* Tamaño de fuente deseado */
+  margin-top: 10px; /* Espacio encima del texto */
+  font-family: 'Arial', sans-serif; /* Elige la fuente que quieras, aquí es solo un ejemplo */
+  color: #000; /* Cambia el color del texto a negro */
+  font-weight: bold; /* Hace que el texto sea negrita */    width: 100%; /* Asegura que el texto se expanda al ancho completo de su contenedor */
+  order: 1; /* Asegura que el texto venga después de la imagen */
+  margin-top: 10px; /* Espacio encima del texto */
+}
+
+.image-text8 {
+  font-size: 18px; /* Tamaño de fuente deseado */
+  margin-top: 10px; /* Espacio encima del texto */
+  font-family: 'Arial', sans-serif; /* Elige la fuente que quieras, aquí es solo un ejemplo */
+  color: #fff; /* Cambia el color del texto a blanco */
+  font-weight: bold; /* Hace que el texto sea negrita */    width: 100%; /* Asegura que el texto se expanda al ancho completo de su contenedor */
+  order: 1; /* Asegura que el texto venga después de la imagen */
+  margin-top: 10px; /* Espacio encima del texto */
+}
+
+/* Media query para pantallas de hasta 768px de ancho (Tabletas y celulares en modo horizontal) */
+@media screen and (max-width: 768px) {
+  .logo img {
+      width: 15vw; /* Ejemplo de ajuste para el logo */
+  }
+
+  .topnav .button {
+      padding: 15px 50px; /* Ejemplo de ajuste para el botón en la barra de navegación */
+  }
+
+  .card-container {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Ejemplo de ajuste para las tarjetas */
+  }
+
+  .card3 {
+      width: 90%; /* Ejemplo de ajuste para la tarjeta 3 */
+  }
+
+  .image5 {
+      width: 20vw; /* Ejemplo de ajuste para la imagen del botón */
+  }
+}
+
+/* Media query para pantallas de dispositivos móviles */
+@media screen and (max-width: 768px) {
+  /* Ajustes para el logo */
+  .logo img {
+      width: 80px; /* Tamaño del logo */
+  }
+
+  /* Ajustes para la barra de navegación */
+  .topnav .button {
+      padding: 10px 20px; /* Ajustes de espaciado para el botón */
+      font-size: 14px; /* Tamaño de fuente para el botón */
+  }
+
+  /* Ajustes para las tarjetas */
+  .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+  }
+
+  .card {
+      width: calc(50% - 10px); /* Dos tarjetas por fila con espacio entre ellas */
+      margin-bottom: 20px; /* Espacio entre las tarjetas */
+  }
+
+  /* Ejemplo de ajuste para la tarjeta 3 */
+  .card3 {
+      width: 100%; /* Una tarjeta por fila */
+  }
+
+  /* Ejemplo de ajuste para la imagen del botón */
+  .image5 {
+      width: 100px; /* Tamaño de la imagen del botón */
+  }
+
+  /* Ajuste para que todas las tarjetas tengan el mismo tamaño */
+  .card {
+      width: 100%; /* Todas las tarjetas ocupan el 100% del ancho disponible */
+      margin-bottom: 20px; /* Espacio entre las tarjetas */
+  }
+}
