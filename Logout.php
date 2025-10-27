@@ -8,7 +8,7 @@ $_SESSION = array();
 // Finalmente, destruye la sesión
 session_destroy();
 
-// Redireccionar al usuario a la página de inicio (o cualquier otra página)
-header("Location: index.html");
+// Redireccionar al usuario a index.php
+header("Location: index.php");
 exit();
 ?>

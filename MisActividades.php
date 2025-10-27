@@ -14,18 +14,17 @@ $mensaje = "";
 // AGREGAR nueva actividad
 if (isset($_POST['add'])) {
     $materiaId = $_POST['materiaId'];
-    $tipoActividadId = $_POST['tipoActividadId'];
     $descripcion = $_POST['descripcion'];
     $fecha = $_POST['fecha'];
     
-    $query = "INSERT INTO ActividadesAcademicas (usuariosid, materiaId, tipoactividadid, descripcion, fecha) VALUES (?, ?, ?, ?, ?)";
+    $query = "INSERT INTO ActividadesAcademicas (usuariosid, materiaId, descripcion, fecha) VALUES (?, ?, ?, ?)";
     $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "iiiss", $user_id, $materiaId, $tipoActividadId, $descripcion, $fecha);
+    mysqli_stmt_bind_param($stmt, "iiss", $user_id, $materiaId, $descripcion, $fecha);
     
     if (mysqli_stmt_execute($stmt)) {
         $mensaje = "✅ Actividad agregada con éxito";
     } else {
-        $mensaje = "❌ Error al agregar actividad";
+        $mensaje = "❌ Error al agregar actividad: " . mysqli_error($conn);
     }
     mysqli_stmt_close($stmt);
 }
@@ -48,13 +47,12 @@ if (isset($_POST['delete'])) {
 if (isset($_POST['update'])) {
     $id_actividad = $_POST['id_actividad'];
     $materiaId = $_POST['materiaId'];
-    $tipoActividadId = $_POST['tipoActividadId'];
     $descripcion = $_POST['descripcion'];
     $fecha = $_POST['fecha'];
     
-    $query = "UPDATE ActividadesAcademicas SET materiaId = ?, tipoactividadid = ?, descripcion = ?, fecha = ? WHERE ID_actividadesacademicas = ? AND usuariosid = ?";
+    $query = "UPDATE ActividadesAcademicas SET materiaId = ?, descripcion = ?, fecha = ? WHERE ID_actividadesacademicas = ? AND usuariosid = ?";
     $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "iissii", $materiaId, $tipoActividadId, $descripcion, $fecha, $id_actividad, $user_id);
+    mysqli_stmt_bind_param($stmt, "issii", $materiaId, $descripcion, $fecha, $id_actividad, $user_id);
     
     if (mysqli_stmt_execute($stmt)) {
         $mensaje = "✅ Actividad actualizada";
@@ -63,10 +61,9 @@ if (isset($_POST['update'])) {
 }
 
 // Obtener las actividades del usuario
-$query = "SELECT a.*, m.nombre as materia_nombre, t.nombre as tipo_nombre 
+$query = "SELECT a.*, m.nombre as materia_nombre 
           FROM ActividadesAcademicas a
           LEFT JOIN Materia m ON a.materiaId = m.ID_materia
-          LEFT JOIN Tipos_Actividades t ON a.tipoactividadid = t.ID_tipos_actividades
           WHERE a.usuariosid = ?
           ORDER BY a.fecha ASC";
 $stmt = mysqli_prepare($conn, $query);
@@ -87,14 +84,6 @@ while ($row = mysqli_fetch_assoc($resultMaterias)) {
     $materias[] = $row;
 }
 
-// Obtener tipos de actividades
-$queryTipos = "SELECT * FROM Tipos_Actividades";
-$resultTipos = mysqli_query($conn, $queryTipos);
-$tipos = [];
-while ($row = mysqli_fetch_assoc($resultTipos)) {
-    $tipos[] = $row;
-}
-
 mysqli_close($conn);
 ?>
 
@@ -109,15 +98,19 @@ mysqli_close($conn);
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-image: url('Imagenes/bg.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
             min-height: 100vh;
             padding: 20px;
         }
         .container {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         .actividad-card {
             border-left: 4px solid #667eea;
@@ -145,13 +138,15 @@ mysqli_close($conn);
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>📝 Mis Actividades Académicas</h2>
         <div>
-            <a href="Academicas.php" class="btn btn-secondary">← Volver</a>
-            <a href="Logout.php" class="btn btn-danger">Cerrar Sesión</a>
+            <a href="index.php" class="btn btn-secondary">← Volver</a>
         </div>
     </div>
 
     <?php if ($mensaje): ?>
-        <div class="alert alert-info"><?= $mensaje ?></div>
+        <div class="alert alert-info alert-dismissible fade show">
+            <?= $mensaje ?>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
     <?php endif; ?>
 
     <!-- Botón para agregar actividad -->
@@ -183,8 +178,8 @@ mysqli_close($conn);
             ?>
             <div class="col-md-6">
                 <div class="actividad-card <?= $clase ?>">
-                    <h5><?= htmlspecialchars($actividad['tipo_nombre'] ?? 'Actividad') ?></h5>
-                    <p><strong>Materia:</strong> <?= htmlspecialchars($actividad['materia_nombre']) ?></p>
+                    <h5>📚 Actividad</h5>
+                    <p><strong>Materia:</strong> <?= htmlspecialchars($actividad['materia_nombre'] ?? 'Sin materia') ?></p>
                     <p><strong>Descripción:</strong> <?= htmlspecialchars($actividad['descripcion']) ?></p>
                     <p><strong>Fecha:</strong> <?= date('d/m/Y', strtotime($actividad['fecha'])) ?></p>
                     
@@ -199,7 +194,7 @@ mysqli_close($conn);
                     <?php endif; ?>
                     
                     <div class="mt-3">
-                        <button class="btn btn-sm btn-info" onclick="editarActividad(<?= $actividad['ID_actividadesacademicas'] ?>, '<?= htmlspecialchars($actividad['descripcion']) ?>', <?= $actividad['materiaId'] ?>, <?= $actividad['tipoactividadid'] ?>, '<?= $actividad['fecha'] ?>')">
+                        <button class="btn btn-sm btn-info" onclick="editarActividad(<?= $actividad['ID_actividadesacademicas'] ?>, '<?= htmlspecialchars($actividad['descripcion']) ?>', <?= $actividad['materiaId'] ?? 0 ?>, '<?= $actividad['fecha'] ?>')">
                             ✏️ Editar
                         </button>
                         <form method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar esta actividad?');">
@@ -234,17 +229,8 @@ mysqli_close($conn);
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Tipo de Actividad:</label>
-                        <select name="tipoActividadId" class="form-control" required>
-                            <option value="">Seleccionar...</option>
-                            <?php foreach ($tipos as $tipo): ?>
-                                <option value="<?= $tipo['ID_tipos_actividades'] ?>"><?= htmlspecialchars($tipo['nombre']) ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label>Descripción:</label>
-                        <textarea name="descripcion" class="form-control" rows="3" required></textarea>
+                        <textarea name="descripcion" class="form-control" rows="3" required placeholder="Ej: Entregar tarea de matemáticas"></textarea>
                     </div>
                     <div class="form-group">
                         <label>Fecha de entrega:</label>
@@ -280,14 +266,6 @@ mysqli_close($conn);
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Tipo:</label>
-                        <select name="tipoActividadId" id="edit_tipo" class="form-control" required>
-                            <?php foreach ($tipos as $tipo): ?>
-                                <option value="<?= $tipo['ID_tipos_actividades'] ?>"><?= htmlspecialchars($tipo['nombre']) ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label>Descripción:</label>
                         <textarea name="descripcion" id="edit_descripcion" class="form-control" rows="3" required></textarea>
                     </div>
@@ -306,11 +284,10 @@ mysqli_close($conn);
 </div>
 
 <script>
-function editarActividad(id, descripcion, materiaId, tipoId, fecha) {
+function editarActividad(id, descripcion, materiaId, fecha) {
     $('#edit_id').val(id);
     $('#edit_descripcion').val(descripcion);
     $('#edit_materia').val(materiaId);
-    $('#edit_tipo').val(tipoId);
     $('#edit_fecha').val(fecha);
     $('#editModal').modal('show');
 }

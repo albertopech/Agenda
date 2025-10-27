@@ -7,6 +7,8 @@ $mensajeError = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = isset($_POST['nombre']) ? htmlspecialchars($_POST['nombre']) : '';
     $contrasena = isset($_POST['contrasena']) ? $_POST['contrasena'] : '';
+    
+    // Determinar tipo de usuario: si empieza con "Admin" es admin (2), si no es estudiante (1)
     $tiposusuarioid = (strpos($nombre, "Admin") === 0) ? '2' : '1';
 
     if (empty($nombre) || empty($contrasena)) {
@@ -22,26 +24,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (mysqli_fetch_assoc($result)) {
             $mensajeError = "El nombre de usuario ya existe.";
         } else {
-            // Insertar el nuevo usuario
-            $insertQuery = "INSERT INTO Usuarios (nombre, contrasenas, tiposusuariosid) VALUES (?, ?, ?)";
-            $insertStmt = mysqli_prepare($conn, $insertQuery);
+            // Hash de la contraseña
             $hashedPassword = password_hash($contrasena, PASSWORD_DEFAULT);
-            mysqli_stmt_bind_param($insertStmt, "ssi", $nombre, $hashedPassword, $tiposusuarioid);
             
-            if (mysqli_stmt_execute($insertStmt)) {
-                $_SESSION['registro_usuario'] = [
-                    'ID_usuarios' => mysqli_insert_id($conn),
-                    'nombre' => $nombre,
-                    'tiposusuarioid' => $tiposusuarioid
-                ];
-                
-                header("Location: Informacionpersonal.php");
-                exit();
-            } else {
-                $mensajeError = "Error al registrar el usuario.";
-            }
+            // Guardar datos en sesión para usarlos después
+            $_SESSION['registro_usuario'] = [
+                'nombre' => $nombre,
+                'contrasena' => $hashedPassword,  // Guardar el hash
+                'tiposusuarioid' => $tiposusuarioid
+            ];
             
-            mysqli_stmt_close($insertStmt);
+            mysqli_stmt_close($checkStmt);
+            
+            // Redirigir a información personal
+            header("Location: Informacionpersonal.php");
+            exit();
         }
         
         mysqli_stmt_close($checkStmt);
@@ -61,7 +58,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Registrarse</h2>
 
         <?php if ($mensajeError != ""): ?>
-            <div class='alert alert-danger'><?= $mensajeError ?></div>
+            <div class='alert alert-danger' style="background: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+                <?= htmlspecialchars($mensajeError) ?>
+            </div>
         <?php endif; ?>
 
         <label for="nombre"><p>Nombre Usuario:</p></label>
@@ -71,6 +70,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="password" name="contrasena" class="form-control" required>
 
         <input type="submit" value="Registrarse" class="btn btn-1">
+        
+        <div class="text-center" style="margin-top: 15px;">
+            <p>¿Ya tienes cuenta? <a href="Login.php" style="color: #00ADEF;">Inicia sesión</a></p>
+        </div>
     </form>
 </body>
 </html>

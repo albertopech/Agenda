@@ -1,3 +1,7 @@
+<?php
+session_start();
+$isLoggedIn = isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -33,7 +37,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#">Mis Actividades</a>
+                <a class="nav-link" aria-current="page" href="<?php echo $isLoggedIn ? 'MisActividades.php' : '#'; ?>">Mis Actividades</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#equipo">Equipo</a>
@@ -43,7 +47,12 @@
               </li>
             </ul>
             <form class="d-flex">
-              <a href="Login.php" class="button">Iniciar Sesión</a>
+              <?php if ($isLoggedIn): ?>
+                <a href="Academicas.php" class="button" style="margin-right: 10px;">Mi Portal</a>
+                <a href="Logout.php" class="button">Cerrar Sesión</a>
+              <?php else: ?>
+                <a href="Login.php" class="button">Iniciar Sesión</a>
+              <?php endif; ?>
             </form>
           </div>
 
@@ -239,7 +248,7 @@
                   alert('¡Gracias por contactarnos! Tu mensaje ha sido enviado correctamente.');
   
                   // Opcional: redirigir a otra página después de mostrar el mensaje
-                  window.location.href = 'index.html';
+                  window.location.href = 'index.php';
               },
               error: function() {
                   alert('Hubo un error al enviar el formulario.');

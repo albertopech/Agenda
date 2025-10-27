@@ -104,9 +104,16 @@ mysqli_close($conn);
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
+            margin-left: 10px;
         }
         .logout-btn:hover {
-            background-color: #c82333;
+            opacity: 0.9;
+        }
+        .actividades-btn {
+            background-color: #28a745;
+        }
+        .actividades-btn:hover {
+            background-color: #218838;
         }
     </style>
 </head>
@@ -115,7 +122,10 @@ mysqli_close($conn);
 <div class="dashboard-container">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h1>Portal Académico</h1>
-        <a href="Logout.php" class="logout-btn">Cerrar Sesión</a>
+        <div>
+            <a href="MisActividades.php" class="logout-btn actividades-btn">📝 Mis Actividades</a>
+            <a href="index.php" class="logout-btn" style="background-color: #007bff;">← Volver al Inicio</a>
+        </div>
     </div>
 
     <!-- Información Personal -->
