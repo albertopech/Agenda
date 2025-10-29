@@ -1,92 +1,3 @@
-<?php
-session_start();
-include 'Conexion.php';
-
-// Verificar si el usuario está logueado
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: Login.php");
-    exit();
-}
-
-$user_id = $_SESSION['user_id'];
-$mensaje = "";
-
-// AGREGAR nueva actividad
-if (isset($_POST['add'])) {
-    $materiaId = $_POST['materiaId'];
-    $descripcion = $_POST['descripcion'];
-    $fecha = $_POST['fecha'];
-    
-    $query = "INSERT INTO ActividadesAcademicas (usuariosid, materiaId, descripcion, fecha) VALUES (?, ?, ?, ?)";
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "iiss", $user_id, $materiaId, $descripcion, $fecha);
-    
-    if (mysqli_stmt_execute($stmt)) {
-        $mensaje = "✅ Actividad agregada con éxito";
-    } else {
-        $mensaje = "❌ Error al agregar actividad: " . mysqli_error($conn);
-    }
-    mysqli_stmt_close($stmt);
-}
-
-// ELIMINAR actividad
-if (isset($_POST['delete'])) {
-    $id_actividad = $_POST['id_actividad'];
-    
-    $query = "DELETE FROM ActividadesAcademicas WHERE ID_actividadesacademicas = ? AND usuariosid = ?";
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "ii", $id_actividad, $user_id);
-    
-    if (mysqli_stmt_execute($stmt)) {
-        $mensaje = "✅ Actividad eliminada";
-    }
-    mysqli_stmt_close($stmt);
-}
-
-// EDITAR actividad
-if (isset($_POST['update'])) {
-    $id_actividad = $_POST['id_actividad'];
-    $materiaId = $_POST['materiaId'];
-    $descripcion = $_POST['descripcion'];
-    $fecha = $_POST['fecha'];
-    
-    $query = "UPDATE ActividadesAcademicas SET materiaId = ?, descripcion = ?, fecha = ? WHERE ID_actividadesacademicas = ? AND usuariosid = ?";
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "issii", $materiaId, $descripcion, $fecha, $id_actividad, $user_id);
-    
-    if (mysqli_stmt_execute($stmt)) {
-        $mensaje = "✅ Actividad actualizada";
-    }
-    mysqli_stmt_close($stmt);
-}
-
-// Obtener las actividades del usuario
-$query = "SELECT a.*, m.nombre as materia_nombre 
-          FROM ActividadesAcademicas a
-          LEFT JOIN Materia m ON a.materiaId = m.ID_materia
-          WHERE a.usuariosid = ?
-          ORDER BY a.fecha ASC";
-$stmt = mysqli_prepare($conn, $query);
-mysqli_stmt_bind_param($stmt, "i", $user_id);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
-$actividades = [];
-while ($row = mysqli_fetch_assoc($result)) {
-    $actividades[] = $row;
-}
-mysqli_stmt_close($stmt);
-
-// Obtener materias para el select
-$queryMaterias = "SELECT * FROM Materia";
-$resultMaterias = mysqli_query($conn, $queryMaterias);
-$materias = [];
-while ($row = mysqli_fetch_assoc($resultMaterias)) {
-    $materias[] = $row;
-}
-
-mysqli_close($conn);
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -98,7 +9,7 @@ mysqli_close($conn);
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         body {
-            background-image: url('Imagenes/bg.jpg');
+            background-image: url('../Imagenes/bg.jpg');
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -127,9 +38,6 @@ mysqli_close($conn);
             border-left-color: #dc3545;
             background: #f8d7da;
         }
-        .btn-volver {
-            margin-bottom: 20px;
-        }
     </style>
 </head>
 <body>
@@ -138,23 +46,21 @@ mysqli_close($conn);
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>📝 Mis Actividades Académicas</h2>
         <div>
-            <a href="index.php" class="btn btn-secondary">← Volver</a>
+            <a href="../views/index.php" class="btn btn-secondary">← Volver</a>
         </div>
     </div>
 
-    <?php if ($mensaje): ?>
+    <?php if (isset($mensaje) && $mensaje): ?>
         <div class="alert alert-info alert-dismissible fade show">
-            <?= $mensaje ?>
+            <?= htmlspecialchars($mensaje) ?>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
     <?php endif; ?>
 
-    <!-- Botón para agregar actividad -->
     <button type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#addModal">
         ➕ Agregar Nueva Actividad
     </button>
 
-    <!-- Lista de actividades -->
     <div class="row">
         <?php if (empty($actividades)): ?>
             <div class="col-12">
@@ -197,9 +103,9 @@ mysqli_close($conn);
                         <button class="btn btn-sm btn-info" onclick="editarActividad(<?= $actividad['ID_actividadesacademicas'] ?>, '<?= htmlspecialchars($actividad['descripcion']) ?>', <?= $actividad['materiaId'] ?? 0 ?>, '<?= $actividad['fecha'] ?>')">
                             ✏️ Editar
                         </button>
-                        <form method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar esta actividad?');">
+                        <form method="POST" action="../controllers/ActividadController.php?action=eliminar" style="display:inline;" onsubmit="return confirm('¿Eliminar esta actividad?');">
                             <input type="hidden" name="id_actividad" value="<?= $actividad['ID_actividadesacademicas'] ?>">
-                            <button type="submit" name="delete" class="btn btn-sm btn-danger">🗑️ Eliminar</button>
+                            <button type="submit" class="btn btn-sm btn-danger">🗑️ Eliminar</button>
                         </form>
                     </div>
                 </div>
@@ -217,7 +123,7 @@ mysqli_close($conn);
                 <h5 class="modal-title">Agregar Actividad</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <form method="POST">
+            <form method="POST" action="../controllers/ActividadController.php?action=crear">
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Materia:</label>
@@ -239,7 +145,7 @@ mysqli_close($conn);
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" name="add" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
         </div>
@@ -254,7 +160,7 @@ mysqli_close($conn);
                 <h5 class="modal-title">Editar Actividad</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <form method="POST">
+            <form method="POST" action="../controllers/ActividadController.php?action=actualizar">
                 <input type="hidden" name="id_actividad" id="edit_id">
                 <div class="modal-body">
                     <div class="form-group">
@@ -276,7 +182,7 @@ mysqli_close($conn);
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" name="update" class="btn btn-primary">Actualizar</button>
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
                 </div>
             </form>
         </div>

@@ -1,0 +1,245 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: url('/Agenda/Imagenes/bg.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    background-color: #EEEEEE;
+    padding: 35px;
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h2 {
+    text-align: center;
+    font-size: 30px;
+    text-transform: uppercase;
+    color: #2E2E2E;
+    margin-bottom: 25px;
+}
+
+label p {
+    font-size: 17px;
+    color: #575757;
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"] {
+    padding: 17px 11px;
+    border: 1px solid #00ADEF;
+    border-radius: 25px;
+    margin-bottom: 25px;
+    background-color: #FAFAFC;
+    outline: none;
+    color: #00ADEF;
+    font-size: 16px;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus {
+    border-color: #04b8ff;
+    box-shadow: 0 0 8px rgba(0, 173, 239, 0.3);
+    transform: scale(1.01);
+}
+
+textarea {
+    padding: 17px 11px;
+    border: 1px solid #00ADEF;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    background-color: #FAFAFC;
+    outline: none;
+    color: #00ADEF;
+    font-size: 16px;
+    width: 100%;
+    resize: vertical;
+    font-family: 'Helvetica Neue', sans-serif;
+    transition: all 0.3s ease;
+}
+
+textarea:focus {
+    border-color: #04b8ff;
+    box-shadow: 0 0 8px rgba(0, 173, 239, 0.3);
+}
+
+.btn-1,
+input[type="submit"] {
+    background-color: #00ADEF;
+    font-size: 15px;
+    color: #ffffff;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    padding: 17px 11px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.btn-1:hover,
+input[type="submit"]:hover {
+    background-color: #04b8ff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 173, 239, 0.4);
+}
+
+.btn-1:active,
+input[type="submit"]:active {
+    transform: translateY(0);
+}
+
+.button-custom {
+    background-color: #00ADEF;
+    font-size: 15px;
+    color: #ffffff;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 25px;
+    margin: 10px 0;
+    transition: background-color 0.3s ease;
+}
+
+.button-custom:hover {
+    background-color: #04b8ff;
+}
+
+button#next1, 
+button#prev1, 
+button[type="submit"] {
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.text-center label p {
+    font-size: 15px;
+    color: #575757;
+    margin-bottom: 10px;
+}
+
+.btn-link {
+    color: #00ADEF;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn-link:hover {
+    color: #04b8ff;
+    text-decoration: underline;
+    transform: scale(1.05);
+}
+
+.alert {
+    padding: 12px 15px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    text-align: center;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border: 1px solid #f5c2c7;
+    color: #842029;
+}
+
+.alert-success {
+    background-color: #d1e7dd;
+    border: 1px solid #badbcc;
+    color: #0f5132;
+}
+
+.alert-info {
+    background-color: #cff4fc;
+    border: 1px solid #b6effb;
+    color: #055160;
+}
+
+/* Media query para teléfonos */
+@media only screen and (max-width: 600px) {
+    form {
+        width: 95%;
+        padding: 25px;
+    }
+    
+    h2 {
+        font-size: 24px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+        font-size: 14px;
+        padding: 14px 10px;
+    }
+
+    label p {
+        font-size: 15px;
+    }
+}
+
+/* Media query para computadoras */
+@media only screen and (min-width: 601px) {
+    form {
+        width: 400px;
+    }
+}
